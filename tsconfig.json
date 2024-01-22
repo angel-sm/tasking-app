@@ -18,8 +18,16 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@redux/*": ["./src/context/shared/infrastructure/redux/*"],
+      "@tasks/*": ["./src/context/Task/*"],
+      "@components/*": ["./src/presentation/components/*"],
+      "@assets/*": ["./src/presentation/assets/*"],
+    },
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
 }

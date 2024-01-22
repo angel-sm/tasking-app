@@ -1,4 +1,4 @@
-import { add, differenceInMinutes } from "date-fns";
+import { add } from "date-fns";
 import { ITask } from "./Task.interface";
 import { UUID } from "../../shared/domain/uuid";
 
@@ -6,66 +6,68 @@ export class Task {
   id?: string;
   name: string;
   description?: string;
-  slug: string;
-  startDate?: Date;
-  finalizeDate?: Date;
-  timelapStopped?: Date;
+  startDate?: number;
+  finalizeDate?: number;
+  timeLeft?: number;
   duration: number;
   status: "PROGRESS" | "TODO" | "DONE";
+  isStopped: boolean;
 
   constructor({
     id,
     name,
     description,
-    slug,
     startDate,
     finalizeDate,
-    timelapStopped,
+    timeLeft,
     duration,
+    isStopped,
   }: ITask) {
     this.id = id ?? UUID.Generator().id;
     this.name = name;
     this.description = description;
-    this.slug = slug ?? Task.GenerateSlug(name);
     this.startDate = startDate;
     this.finalizeDate = finalizeDate;
-    this.timelapStopped = timelapStopped;
-    this.duration = duration;
+    this.timeLeft = timeLeft;
+    this.duration = duration * 60;
     this.status = "TODO";
-  }
-
-  static GenerateSlug(name: string) {
-    return name.replace(/\s/g, "-").toLocaleLowerCase();
+    this.isStopped = isStopped ?? false;
   }
 
   static Create(data: ITask) {
     return new Task(data);
   }
 
-  public start(duration: number) {
-    this.startDate = new Date();
-    this.duration = duration;
-    this.finalizeDate = add(this.startDate as Date, {
-      minutes: duration,
-    });
+  getPrimitives() {
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      startDate: this.startDate,
+      finalizeDate: this.finalizeDate,
+      timeLeft: this.timeLeft,
+      duration: this.duration,
+      status: this.status,
+      isStopped: this.isStopped,
+    };
+  }
+
+  public start() {
+    this.startDate = new Date().getTime();
+    this.finalizeDate = add(new Date(this.startDate), {
+      minutes: this.duration,
+    }).getTime();
     this.status = "PROGRESS";
   }
 
-  public pause() {
-    this.timelapStopped = new Date();
+  public pause(timeLeft: number) {
+    this.timeLeft = timeLeft;
+    this.isStopped = true;
   }
 
   public restart() {
-    const taskTimes = {
-      timelapStopped: this.timelapStopped,
-      timeLeft: differenceInMinutes(
-        this.timelapStopped as Date,
-        this.finalizeDate as Date
-      ),
-    };
-
-    this.timelapStopped = undefined;
-    return taskTimes;
+    this.isStopped = false;
+    return this.timeLeft;
   }
 
   public finalize() {

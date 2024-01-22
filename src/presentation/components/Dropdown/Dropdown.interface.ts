@@ -4,7 +4,7 @@ export interface IDropDownProps {
   group: string;
 }
 
-interface Option {
+export interface Option {
   title: string;
   action(): unknown;
 }

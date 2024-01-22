@@ -10,11 +10,9 @@ export class TaskCreator implements ICreateTask {
     this.repository = new LocalRepository();
   }
 
-  async create(data: ITask): Promise<void> {
+  async create(data: ITask): Promise<Task> {
     const newTask = Task.Create(data);
-    console.log(newTask);
-    newTask.start(data.duration);
-
     this.repository.create(newTask);
+    return newTask;
   }
 }

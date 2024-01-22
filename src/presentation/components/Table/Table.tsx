@@ -2,12 +2,15 @@ import { ITableProps } from "./Table.interface";
 
 const Table = ({ columns, rows }: ITableProps) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+    <div className="container mx-auto">
+      <table className="bg-white table-fixed">
         <thead className="ltr:text-left rtl:text-right">
           <tr>
-            {columns.map((column) => (
-              <th className="text-left whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+            {columns.map((column, idx) => (
+              <th
+                key={idx}
+                className="text-left px-4 py-2 font-medium text-gray-900"
+              >
                 {column}
               </th>
             ))}

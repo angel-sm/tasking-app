@@ -6,15 +6,15 @@ export interface ISearchTasks {
 }
 
 export interface IFindTask {
-  find(): Promise<Task | undefined>;
+  find(id: string): Promise<Task | undefined>;
 }
 
 export interface ICreateTask {
-  create(data: ITask): Promise<void>;
+  create(data: ITask): Promise<Task>;
 }
 
 export interface IUpdateTask {
-  update(id: string, newData: Task): Promise<void>;
+  update(id: string, newData: ITask): Promise<void>;
 }
 
 export interface IDeleteTask {

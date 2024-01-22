@@ -1,29 +1,36 @@
-import Pagination from "../../components/Pagination/Pagination";
-import Table from "../../components/Table/Table";
-import NewTaskForm from "./components/NewTaskForm";
+import { useSelector } from "react-redux";
+
+import { RootState } from "@redux/Index";
+
+import Pagination from "@components/Pagination/Pagination";
+import Table from "@components/Table/Table";
+
+import TaskForm from "./components/TaskForm";
 import TaskRow from "./components/TaskRow";
 
-const COLUMNS = ["Task", "Description", "Time", "Actions"];
+const COLUMNS = ["Task", "Description", "Duration", "Progress", "Actions"];
 
-const Home = () => (
-  <>
-    <div className="grid grid-cols-1">
-      <div className="col-9">
-        <div className="grid grid-rows-1 grid-cols-1 p-2 my-2 justify-items-end border-2">
-          <NewTaskForm />
-        </div>
+const Home = () => {
+  const { tasks } = useSelector((state: RootState) => state.tasks);
+
+  return (
+    <div className="">
+      <div className="grid grid-rows-1 grid-cols-1 p-2 my-2 justify-items-end">
+        <TaskForm />
+      </div>
+      <div className="">
         <Table
           columns={COLUMNS}
           rows={() =>
-            Array(10)
-              .fill("")
-              .map(() => <TaskRow />)
+            tasks.map((task) => <TaskRow key={task.id} document={task} />)
           }
         />
+      </div>
+      <div className="grid grid-rows-1 grid-cols-1 p-2 my-2 justify-items-end mt-2">
         <Pagination />
       </div>
     </div>
-  </>
-);
+  );
+};
 
 export default Home;

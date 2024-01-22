@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Task from "../../assets/icons/Task.icon";
+import Task from "@assets/icons/Task.icon";
 
 interface ILayoutProps {
   children: ReactNode;

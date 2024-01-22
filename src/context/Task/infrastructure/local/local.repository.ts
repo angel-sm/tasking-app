@@ -5,12 +5,13 @@ export class LocalRepository implements ITaskRepository {
   async search(): Promise<Task[] | []> {
     throw new Error("Method not implemented.");
   }
-  async find(): Promise<Task | undefined> {
+  async find(id: string): Promise<Task | undefined> {
+    console.log("🚀 ~ LocalRepository ~ find ~ id:", id);
     throw new Error("Method not implemented.");
   }
   async create(data: Task): Promise<void> {
-    console.log("🚀 ~ LocalRepository ~ create ~ data:", data);
-    throw new Error("Method not implemented.");
+    console.log("🚀 Task stored!!! ", data);
+    return;
   }
   async update(id: string, newData: Task): Promise<void> {
     console.log("🚀 ~ LocalRepository ~ update ~ newData:", newData);

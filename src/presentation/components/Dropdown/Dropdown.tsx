@@ -16,10 +16,7 @@ const Dropdown = ({ button, options, group }: IDropDownProps) => {
         </button>
       </div>
       {open && (
-        <div
-          className="absolute end-0 z-10 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg"
-          role="menu"
-        >
+        <div className="origin-top-right z-10 absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <strong className="block pt-2 px-2 text-xs font-medium uppercase text-gray-400">
             {group}
           </strong>
@@ -28,6 +25,7 @@ const Dropdown = ({ button, options, group }: IDropDownProps) => {
             {options &&
               options.map((option) => (
                 <button
+                  key={option.title}
                   type="button"
                   className="block w-full text-left rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   role="menuitem"
