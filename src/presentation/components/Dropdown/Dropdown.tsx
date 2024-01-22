@@ -4,17 +4,13 @@ import { IDropDownProps } from "./Dropdown.interface";
 const Dropdown = ({ button, options, group }: IDropDownProps) => {
   const [open, setOpen] = useState(false);
 
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
   return (
     <div className="relative">
-      <div className="inline-flex items-center overflow-hidden rounded-md border bg-white">
-        <button
-          type="button"
-          onClick={() => setOpen(!open)}
-          className="border-e px-4 py-2 text-sm/none text-gray-600 hover:bg-gray-50 hover:text-gray-700"
-        >
-          {button}
-        </button>
-      </div>
+      {button(handleOpen)}
       {open && (
         <div className="origin-top-right z-10 absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <strong className="block pt-2 px-2 text-xs font-medium uppercase text-gray-400">

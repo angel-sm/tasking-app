@@ -45,8 +45,10 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
     const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+    const time = `${minutes > 60 ? String(hours).padStart(2, "0") : "00"}:${String(minutes - hours * 60).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+    return time;
   };
 
   return (

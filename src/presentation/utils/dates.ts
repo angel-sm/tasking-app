@@ -25,7 +25,7 @@ export function parseTimeToMinutes(timeString: string): number {
   const hours = parseInt(match[1], 10) || 0;
   const minutes = parseInt(match[2], 10) || 0;
 
-  return hours * 60 + minutes;
+  return (hours * 60 + minutes) * 60;
 }
 
 export function getTimeProgress() {}

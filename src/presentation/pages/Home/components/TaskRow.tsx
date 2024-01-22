@@ -12,7 +12,9 @@ interface TaskRowProps {
 }
 
 const TaskRow = ({ document }: TaskRowProps) => {
-  const [timeLeft, setTimeLeft] = useState(document.duration);
+  const [timeLeft, setTimeLeft] = useState(
+    document.timeLeft ? document.timeLeft : document.duration
+  );
 
   return (
     <tr>
@@ -45,7 +47,7 @@ const TaskRow = ({ document }: TaskRowProps) => {
               )}
             </>
           )}
-          <RowActions document={document} />
+          <RowActions timeLeft={timeLeft} document={document} />
         </div>
       </td>
     </tr>

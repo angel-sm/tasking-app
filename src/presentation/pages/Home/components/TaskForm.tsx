@@ -12,11 +12,12 @@ import {
 } from "@/presentation/utils/dates";
 import { setTaskToUpdate } from "@/context/Task/infrastructure/redux/Task.slice";
 import { TaskEditor } from "@/context/Task/application/Task-editor";
+import Button from "@/presentation/components/Button/Button";
 
 const TIME_DURATION_OPTIONS = [
-  { duration: "30 min", value: 30 },
-  { duration: "45 min", value: 45 },
-  { duration: "1 hr", value: 60 },
+  { duration: "30 min", value: 1800 },
+  { duration: "45 min", value: 2700 },
+  { duration: "1 hr", value: 3600 },
   { duration: "Other", value: "other" },
 ];
 
@@ -28,7 +29,7 @@ const TaskForm = () => {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const customTimeRef = useRef<HTMLInputElement>(null);
 
-  const [durationSelected, setDurationSelected] = useState<number | string>(0);
+  const [durationSelected, setDurationSelected] = useState<number | string>(30);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleSelectDuration = (duration: number | string) =>
@@ -64,6 +65,7 @@ const TaskForm = () => {
     dispatch(setTaskToUpdate(null));
   };
 
+  /*Used to set update task values */
   useEffect(() => {
     if (task) {
       setOpen(true);
@@ -86,15 +88,7 @@ const TaskForm = () => {
 
   return (
     <>
-      <div className="inline-flex items-center overflow-hidden rounded-md border bg-indigo-500 hover:bg-indigo-600 ">
-        <button
-          onClick={() => setOpen(!open)}
-          type="button"
-          className="px-4 py-2 text-sm/none text-white font-medium "
-        >
-          New task
-        </button>
-      </div>
+      <Button label="New task" onClick={() => setOpen(!open)} type="primary" />
       <SideModal
         open={open}
         onClose={handleCloseForm}
@@ -148,7 +142,7 @@ const TaskForm = () => {
                       key={option.value}
                       onClick={() => handleSelectDuration(option.value)}
                       type="button"
-                      className={`inline-block rounded-md px-4 py-2 text-sm text-gray-500 focus:relative ${durationSelected === option.value ? "text-indigo-700 bg-white" : "hover:text-gray-700 hover:bg-white"}`}
+                      className={`inline-block rounded-md px-4 py-2 text-sm text-gray-500 focus:relative ${durationSelected === option.value ? "text-indigo-700 bg-white font-medium" : "hover:text-gray-700 hover:bg-white"}`}
                     >
                       {option.duration}
                     </button>

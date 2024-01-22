@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export interface IDropDownProps {
-  button: string;
+  button: (handleOpen: () => void) => ReactNode;
   options: Array<Option>;
   group: string;
 }

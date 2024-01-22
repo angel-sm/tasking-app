@@ -12,6 +12,8 @@ export class Task {
   duration: number;
   status: "PROGRESS" | "TODO" | "DONE";
   isStopped: boolean;
+  createdAt: number;
+  updatedAt: number;
 
   constructor({
     id,
@@ -29,9 +31,11 @@ export class Task {
     this.startDate = startDate;
     this.finalizeDate = finalizeDate;
     this.timeLeft = timeLeft;
-    this.duration = duration * 60;
+    this.duration = duration; // manage in seconds
     this.status = "TODO";
     this.isStopped = isStopped ?? false;
+    this.createdAt = new Date().getTime();
+    this.updatedAt = new Date().getTime();
   }
 
   static Create(data: ITask) {
