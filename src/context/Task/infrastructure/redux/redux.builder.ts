@@ -13,23 +13,23 @@ export const createTaskBuilder = (
 
 export const searchTasksBuilder = (
   state: ITasksInitialState,
-  action: PayloadAction<{ [id: string]: Task }>
+  action: PayloadAction<{ [id: string]: Task } | []>
 ) => {
-  state.tasks = action.payload;
+  state.tasks = action.payload as { [id: string]: Task };
 };
 
 export const updateTaskBuilder = (
   state: ITasksInitialState,
-  action: PayloadAction<Task | null>
+  action: PayloadAction<{ [id: string]: Task }>
 ) => {
-  const tasks = action.payload as unknown as { [id: string]: Task };
+  const tasks = action.payload;
   state.tasks = tasks;
 };
 
 export const deleteTaskBuilder = (
   state: ITasksInitialState,
-  action: PayloadAction<Task | null>
+  action: PayloadAction<string>
 ) => {
-  const id = action.payload?.id as string;
+  const id = action.payload;
   delete state.tasks[id];
 };
