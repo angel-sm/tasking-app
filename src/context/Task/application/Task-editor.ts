@@ -10,9 +10,13 @@ export class TaskEditor implements IUpdateTask {
     this.repository = new LocalRepository();
   }
   async update(id: string, newData: ITask): Promise<void> {
-    const oldTask = this.repository.find(id);
+    const oldTask = await this.repository.find(id);
     const taskUpdated = Task.Create(
-      Object.assign(oldTask, newData) as unknown as ITask
+      Object.assign(
+        {},
+        oldTask?.getPrimitives() as ITask,
+        newData as ITask
+      ) as unknown as ITask
     );
     await this.repository.update(id, taskUpdated);
   }

@@ -9,6 +9,13 @@ const reducer = combineReducers({
 
 const store = configureStore({
   reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActionPaths: ["payload"],
+        ignoredPaths: ["tasks"],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

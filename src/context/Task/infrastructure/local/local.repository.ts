@@ -18,17 +18,16 @@ export class LocalRepository implements ITaskRepository {
         }
 
         return Task.Create({
-          id: faker.datatype.uuid(),
           name: faker.lorem.words(6),
           description: faker.lorem.words(20),
           duration,
           timeLeft: leftTimePercent,
-          status: "TODO",
+          status: Math.random() < 0.3 ? "DONE" : "TODO",
           isStopped: false,
         });
       };
 
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 50; i++) {
         this.mucks.push(generateMock());
       }
     }
@@ -38,8 +37,9 @@ export class LocalRepository implements ITaskRepository {
     return this.mucks;
   }
   async find(id: string): Promise<Task | undefined> {
-    console.log(id);
-    throw new Error("Method not implemented.");
+    console.log(this.mucks);
+    const idx = this.mucks.findIndex((task) => task.id === id);
+    return this.mucks[idx];
   }
   async create(data: Task): Promise<void> {
     this.mucks.push(data);
@@ -48,13 +48,10 @@ export class LocalRepository implements ITaskRepository {
   async update(id: string, newData: Task): Promise<void> {
     const idx = this.mucks.findIndex((task) => task.id === id);
     this.mucks.splice(idx, 1);
-
     this.mucks.push(newData);
-
-    throw new Error("Method not implemented.");
   }
   async delete(id: string): Promise<void> {
-    console.log(id);
-    throw new Error("Method not implemented.");
+    const idx = this.mucks.findIndex((task) => task.id === id);
+    this.mucks.splice(idx, 1);
   }
 }

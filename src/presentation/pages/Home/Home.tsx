@@ -7,15 +7,14 @@ import Table from "@components/Table/Table";
 
 import TaskForm from "./components/TaskForm";
 import TaskRow from "./components/TaskRow";
-import ChartIcon from "@/presentation/assets/icons/Chart.icon";
-import Button from "@/presentation/components/Button/Button";
 import Filters from "./components/Filters";
 import { Task } from "@/context/Task/domain/Task.model";
 import { useEffect } from "react";
 
 import { searchTasks } from "@tasks/infrastructure/redux/redux.repository";
+import GraphicModal from "./components/GraphicModal";
 
-const COLUMNS = ["Task", "Description", "Duration", "Progress", "Actions"];
+const COLUMNS = ["Task", "Description", "Duration", "Time left", ""];
 
 const Home = () => {
   const { tasks, filterTasks } = useSelector((state: RootState) => state.tasks);
@@ -23,20 +22,13 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(searchTasks());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="">
-      <div className="flex gap-2 justify-end">
+      <div className="flex gap-2 justify-end mb-3">
+        <GraphicModal />
         <Filters />
-        <Button
-          label={() => (
-            <div className="flex">
-              <ChartIcon width={16} height={16} />
-              <span className="ml-2 font-medium">Stats</span>
-            </div>
-          )}
-        />
         <TaskForm />
       </div>
       <div className="">

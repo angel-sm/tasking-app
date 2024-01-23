@@ -57,7 +57,7 @@ const TaskForm = () => {
       const id = task.id as string;
       editor.update(id, newTask);
     }
-    setOpen(!open);
+    handleCloseForm();
   };
 
   const handleCloseForm = () => {
@@ -165,7 +165,7 @@ const TaskForm = () => {
                   type="submit"
                   className="inline-block w-full rounded-lg bg-indigo-500 px-5 py-3 text-sm font-medium text-white"
                 >
-                  Create task
+                  {task ? "Update task" : "Create task"}
                 </button>
               </div>
             </form>

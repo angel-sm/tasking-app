@@ -24,6 +24,7 @@ export class Task {
     timeLeft,
     duration,
     isStopped,
+    status,
   }: ITask) {
     this.id = id ?? UUID.Generator().id;
     this.name = name;
@@ -32,7 +33,7 @@ export class Task {
     this.finalizeDate = finalizeDate;
     this.timeLeft = timeLeft;
     this.duration = duration; // manage in seconds
-    this.status = "TODO";
+    this.status = status ?? "TODO";
     this.isStopped = isStopped ?? false;
     this.createdAt = new Date().getTime();
     this.updatedAt = new Date().getTime();

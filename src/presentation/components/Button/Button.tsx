@@ -26,7 +26,7 @@ const Button = ({
         disabled={disabled}
         type="button"
         onClick={onClick}
-        className={`px-4 py-2 text-sm/none ${custom ? custom.button : classes[type].button}`}
+        className={`px-4 py-2 text-sm/none h-auto ${custom ? custom.button : classes[type].button}`}
       >
         {typeof label === "function" && label()}
         {typeof label === "string" && label}
