@@ -1,11 +1,11 @@
 import { IDeleteTask } from "../domain/Task.repository";
-import { LocalRepository } from "../infrastructure/local/local.repository";
+import { HttpRepository } from "../infrastructure/http/http.repository";
 
 export class TaskDeletor implements IDeleteTask {
-  private repository: LocalRepository;
+  private repository: HttpRepository;
 
   constructor() {
-    this.repository = new LocalRepository();
+    this.repository = new HttpRepository();
   }
 
   async delete(id: string): Promise<void> {

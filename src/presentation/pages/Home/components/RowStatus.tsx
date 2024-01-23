@@ -1,8 +1,11 @@
 import { Task } from "@/context/Task/domain/Task.model";
+import { updateTask } from "@/context/Task/infrastructure/redux/redux.repository";
+import { AppDispatch } from "@/context/shared/infrastructure/redux/Index";
 import Button from "@/presentation/components/Button/Button";
 import { Option } from "@/presentation/components/Dropdown/Dropdown.interface";
 import Dropdown from "@components/Dropdown/Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface IRowStatusProps {
   document: Task;
@@ -15,31 +18,44 @@ export interface Classes {
 }
 
 const RowStatus = ({ document }: IRowStatusProps) => {
-  const [options] = useState<Option[]>(
-    document.status === "PROGRESS"
-      ? [
-          {
-            title: "Finalize",
-            action() {
-              // const editor = new TaskEditor();
-              document.finalize();
-              console.log(document);
-              // editor.update(document.id as string, document.getPrimitives());
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [options, setOptions] = useState<Option[]>([]);
+
+  useEffect(() => {
+    const options =
+      document.status === "PROGRESS"
+        ? [
+            {
+              title: "Finalize",
+              action() {
+                document.finalize();
+                dispatch(
+                  updateTask({
+                    id: document.id,
+                    newTask: document.getPrimitives(),
+                  })
+                );
+              },
             },
-          },
-        ]
-      : [
-          {
-            title: "Progress",
-            action() {
-              // const editor = new TaskEditor();
-              document.start();
-              console.log(document);
-              // editor.update(document.id as string, document.getPrimitives());
+          ]
+        : [
+            {
+              title: "Progress",
+              action() {
+                document.start();
+                dispatch(
+                  updateTask({
+                    id: document.id,
+                    newTask: document.getPrimitives(),
+                  })
+                );
+              },
             },
-          },
-        ]
-  );
+          ];
+
+    setOptions(options);
+  }, [dispatch, document]);
 
   const classes = {
     todo: {

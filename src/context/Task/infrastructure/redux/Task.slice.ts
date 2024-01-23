@@ -1,22 +1,45 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { ITasksInitialState } from "./redux-repository.interface";
-import { createTask, searchTasks } from "./redux.repository";
+import {
+  createTask,
+  searchTasks,
+  deleteTask,
+  updateTask,
+} from "./redux.repository";
 import { PayloadAction } from "@reduxjs/toolkit/react";
 import { Task } from "../../domain/Task.model";
+import {
+  createTaskBuilder,
+  deleteTaskBuilder,
+  searchTasksBuilder,
+  updateTaskBuilder,
+} from "./redux.builder";
 
 const slice = createSlice({
   name: "tasks",
   initialState: <ITasksInitialState>{
-    tasks: [],
+    tasks: {},
     filterTasks: [],
     task: null,
   },
   reducers: {
-    setTaskToUpdate: (state, action: PayloadAction<Task | null>) => {
+    updateTaskInfo: () => {
+      (state: ITasksInitialState, action: PayloadAction<Task | null>) => {
+        const id = action.payload?.id as string;
+        state.tasks[id] = action.payload as Task;
+      };
+    },
+    setTaskToUpdate: (
+      state: ITasksInitialState,
+      action: PayloadAction<Task | null>
+    ) => {
       state.task = action.payload;
     },
-    setTaskFilters: (state, action: PayloadAction<Array<string> | null>) => {
+    setTaskFilters: (
+      state: ITasksInitialState,
+      action: PayloadAction<Array<string> | null>
+    ) => {
       const filters = action.payload;
 
       if (!filters?.length) {
@@ -27,7 +50,7 @@ const slice = createSlice({
       const tasks = new Set();
 
       filters.forEach((filter) => {
-        state.tasks.forEach((task) => {
+        Object.values(state.tasks).forEach((task) => {
           if (tasks.has(task)) {
             return;
           }
@@ -51,24 +74,10 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      createTask.fulfilled,
-      (
-        state: { tasks: (Task | null)[] },
-        action: PayloadAction<Task | null>
-      ) => {
-        state.tasks.push(action.payload);
-      }
-    );
-    builder.addCase(
-      searchTasks.fulfilled,
-      (
-        state: { tasks: Task[] | null },
-        action: PayloadAction<Array<Task> | null>
-      ) => {
-        state.tasks = action.payload;
-      }
-    );
+    builder.addCase(createTask.fulfilled, createTaskBuilder);
+    builder.addCase(searchTasks.fulfilled, searchTasksBuilder);
+    builder.addCase(updateTask.fulfilled, updateTaskBuilder);
+    builder.addCase(deleteTask.fulfilled, deleteTaskBuilder);
   },
 });
 

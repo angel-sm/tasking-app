@@ -1,13 +1,13 @@
 import { ITask } from "../domain/Task.interface";
 import { Task } from "../domain/Task.model";
 import { ICreateTask } from "../domain/Task.repository";
-import { LocalRepository } from "../infrastructure/local/local.repository";
+import { HttpRepository } from "../infrastructure/http/http.repository";
 
 export class TaskCreator implements ICreateTask {
-  private repository: LocalRepository;
+  private repository: HttpRepository;
 
   constructor() {
-    this.repository = new LocalRepository();
+    this.repository = new HttpRepository();
   }
 
   async create(data: ITask): Promise<Task> {

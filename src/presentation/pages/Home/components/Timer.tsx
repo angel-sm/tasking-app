@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+import { TaskEditor } from "@/context/Task/application/Task-editor";
 import { Task } from "@/context/Task/domain/Task.model";
 import React, { useState, useEffect } from "react";
 
@@ -16,7 +17,11 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   const [duration, setDuration] = useState(initialDuration);
 
   useEffect(() => {
-    if (document.status === "PROGRESS" && !document.isStopped) {
+    if (document.isStopped) {
+      return;
+    }
+
+    if (document.status === "PROGRESS") {
       let timerId: NodeJS.Timeout;
 
       const updateTimer = () => {
@@ -39,9 +44,11 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
 
   useEffect(() => {
     if (document.isStopped) {
-      onTimerEnd(duration);
+      const editor = new TaskEditor();
+      document.timeLeft = duration;
+      editor.update(document.id as string, document.getPrimitives());
     }
-  }, [document.isStopped, duration, onTimerEnd]);
+  }, [document, document.isStopped, duration]);
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);

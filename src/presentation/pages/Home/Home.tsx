@@ -14,11 +14,13 @@ import { useEffect } from "react";
 import { searchTasks } from "@tasks/infrastructure/redux/redux.repository";
 import GraphicModal from "./components/GraphicModal";
 
-const COLUMNS = ["Task", "Description", "Duration", "Time left", ""];
+const COLUMNS = ["Task", "Description", "Duration", "Progress", "Actions"];
 
 const Home = () => {
   const { tasks, filterTasks } = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch<AppDispatch>();
+
+  const tasksValues = (Object.values(tasks) as Array<Task>) ?? [];
 
   useEffect(() => {
     dispatch(searchTasks());
@@ -36,7 +38,7 @@ const Home = () => {
           columns={COLUMNS}
           rows={() =>
             !filterTasks.length
-              ? tasks.map((task: Task) => (
+              ? tasksValues.map((task: Task) => (
                   <TaskRow key={task.id} document={task} />
                 ))
               : filterTasks.map((task: Task) => (

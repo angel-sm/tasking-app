@@ -3,7 +3,10 @@ import { useEffect, useRef, useState } from "react";
 
 import SideModal from "@components/SideModal/SideModal";
 
-import { createTask } from "@tasks/infrastructure/redux/redux.repository";
+import {
+  createTask,
+  updateTask,
+} from "@tasks/infrastructure/redux/redux.repository";
 import { AppDispatch, RootState } from "@redux/Index";
 import { ITask } from "@/context/Task/domain/Task.interface";
 import {
@@ -11,7 +14,6 @@ import {
   parseTimeToMinutes,
 } from "@/presentation/utils/dates";
 import { setTaskToUpdate } from "@/context/Task/infrastructure/redux/Task.slice";
-import { TaskEditor } from "@/context/Task/application/Task-editor";
 import Button from "@/presentation/components/Button/Button";
 
 const TIME_DURATION_OPTIONS = [
@@ -53,9 +55,13 @@ const TaskForm = () => {
     if (!task) {
       dispatch(createTask(newTask));
     } else {
-      const editor = new TaskEditor();
       const id = task.id as string;
-      editor.update(id, newTask);
+      dispatch(
+        updateTask({
+          id,
+          newTask,
+        })
+      );
     }
     handleCloseForm();
   };

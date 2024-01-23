@@ -19,7 +19,9 @@ const TaskRow = ({ document }: TaskRowProps) => {
   return (
     <tr>
       <td className="px-4 py-2 font-medium text-gray-900">{document.name}</td>
-      <td className="px-4 py-2 text-gray-700">{document.description}</td>
+      <td className="px-4 py-2 text-gray-700">
+        {String(document.description)}
+      </td>
       <td className="px-4 py-2 text-gray-700">
         {secondsToHoursMinutes(document.duration)}
       </td>
@@ -38,16 +40,13 @@ const TaskRow = ({ document }: TaskRowProps) => {
           {document.status === "PROGRESS" && (
             <>
               {document.isStopped ? (
-                <RestartButton
-                  document={document}
-                  setTimeLeft={(time) => setTimeLeft(time)}
-                />
+                <RestartButton document={document} />
               ) : (
                 <PauseButton document={document} timeLeft={timeLeft} />
               )}
             </>
           )}
-          <RowActions timeLeft={timeLeft} document={document} />
+          <RowActions document={document} />
         </div>
       </td>
     </tr>

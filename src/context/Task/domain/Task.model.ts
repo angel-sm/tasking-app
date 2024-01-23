@@ -34,7 +34,7 @@ export class Task {
     this.timeLeft = timeLeft;
     this.duration = duration; // manage in seconds
     this.status = status ?? "TODO";
-    this.isStopped = isStopped ?? false;
+    this.isStopped = isStopped ?? true;
     this.createdAt = new Date().getTime();
     this.updatedAt = new Date().getTime();
   }
@@ -65,14 +65,12 @@ export class Task {
     this.status = "PROGRESS";
   }
 
-  public pause(timeLeft: number) {
-    this.timeLeft = timeLeft;
+  public pause() {
     this.isStopped = true;
   }
 
   public restart() {
     this.isStopped = false;
-    return this.timeLeft;
   }
 
   public finalize() {

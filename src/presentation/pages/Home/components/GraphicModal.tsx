@@ -13,11 +13,13 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const GraphicModal = () => {
   const { tasks } = useSelector((state: RootState) => state.tasks);
 
-  const totalInTodo = tasks.filter(
+  const tasksValues = (Object.values(tasks) as Array<Task>) ?? [];
+
+  const totalInTodo = tasksValues.filter(
     (task: Task) => task.status === "TODO"
   ).length;
 
-  const totalInDone = tasks.filter(
+  const totalInDone = tasksValues.filter(
     (task: Task) => task.status === "DONE"
   ).length;
 

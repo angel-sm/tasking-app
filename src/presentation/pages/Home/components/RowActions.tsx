@@ -11,10 +11,9 @@ import VerticalDotsIcon from "@/presentation/assets/icons/VerticalDots.icon";
 
 interface IRowActionsProps {
   document: Task;
-  timeLeft: number;
 }
 
-const RowActions = ({ document, timeLeft }: IRowActionsProps) => {
+const RowActions = ({ document }: IRowActionsProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -31,7 +30,6 @@ const RowActions = ({ document, timeLeft }: IRowActionsProps) => {
         {
           title: "Edit",
           action() {
-            document.pause(timeLeft);
             dispatch(setTaskToUpdate(document));
           },
         },

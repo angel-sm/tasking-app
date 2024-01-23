@@ -2,7 +2,12 @@ import { ITask } from "./Task.interface";
 import { Task } from "./Task.model";
 
 export interface ISearchTasks {
-  search(): Promise<Task[] | []>;
+  search(): Promise<
+    | {
+        [id: string]: Task;
+      }
+    | []
+  >;
 }
 
 export interface IFindTask {
@@ -21,7 +26,8 @@ export interface IDeleteTask {
   delete(id: string): Promise<void>;
 }
 
-export interface ITaskRepository extends ISearchTasks, IFindTask, IDeleteTask {
+export interface ITaskRepository extends IFindTask, IDeleteTask {
+  search(): Promise<Task[]>;
   create(data: Task): Promise<void>;
   update(id: string, newData: Task): Promise<void>;
 }
