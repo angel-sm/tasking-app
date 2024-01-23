@@ -53,13 +53,19 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       createTask.fulfilled,
-      (state, action: PayloadAction<Task | null>) => {
+      (
+        state: { tasks: (Task | null)[] },
+        action: PayloadAction<Task | null>
+      ) => {
         state.tasks.push(action.payload);
       }
     );
     builder.addCase(
       searchTasks.fulfilled,
-      (state, action: PayloadAction<Array<Task> | null>) => {
+      (
+        state: { tasks: Task[] | null },
+        action: PayloadAction<Array<Task> | null>
+      ) => {
         state.tasks = action.payload;
       }
     );
