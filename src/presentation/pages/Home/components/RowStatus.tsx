@@ -32,7 +32,7 @@ const RowStatus = ({ document }: IRowStatusProps) => {
                 document.finalize();
                 dispatch(
                   updateTask({
-                    id: document.id,
+                    id: document.id as string,
                     newTask: document.getPrimitives(),
                   })
                 );
@@ -46,7 +46,7 @@ const RowStatus = ({ document }: IRowStatusProps) => {
                 document.start();
                 dispatch(
                   updateTask({
-                    id: document.id,
+                    id: document.id as string,
                     newTask: document.getPrimitives(),
                   })
                 );

@@ -16,14 +16,12 @@ const RestartButton = ({ document }: IRestartButtonProps) => {
     <Button
       label={() => <PlayIcon width={14} height={14} />}
       onClick={() => {
-        console.log("🚀 ~ RestartButton ~ document:", document);
-
         document.restart();
-
-        console.log("🚀 ~ RestartButton ~ document:", document);
-
         dispatch(
-          updateTask({ id: document.id, newTask: document.getPrimitives() })
+          updateTask({
+            id: document.id as string,
+            newTask: document.getPrimitives(),
+          })
         );
       }}
       type="secondary"

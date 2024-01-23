@@ -19,7 +19,10 @@ const PauseButton = ({ document }: IPauseButtonProps) => {
       onClick={() => {
         document.pause();
         dispatch(
-          updateTask({ id: document.id, newTask: document.getPrimitives() })
+          updateTask({
+            id: document.id as string,
+            newTask: document.getPrimitives(),
+          })
         );
       }}
       type="secondary"
